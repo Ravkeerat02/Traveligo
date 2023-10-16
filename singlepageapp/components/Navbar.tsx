@@ -1,38 +1,64 @@
-import { NAV_LINKS } from '@/constants'
-import Image from 'next/image'
-import Link from 'next/link'
-import React from 'react'
-import Button from './Button'
+'use client'
+import { useState } from 'react';
+import { NAV_LINKS } from '@/constants';
+import Image from 'next/image';
+import Button from './Button';
 
 const Navbar = () => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+
   return (
-    <nav className=' flexBetween max-container padding-container relative z-30 py-5'>
-        <Link href="/">
-            <Image src="/hilink-logo.svg" alt="logo" width={74} height={74}/>
-        </Link>
-            {/* unordered list - includes the link to different part s */}
-            <ul className="hidden h-full gap-12 lg:flex">
+    <nav className='flexBetween max-container padding-container relative z-30 py-5'>
+      <div onClick={() => window.location.href = '/'} style={{ cursor: 'pointer' }}>
+        <Image src="/hilink-logo.svg" alt="logo" width={74} height={74} />
+      </div>
+
+      {/* Menu icon for smaller devices */}
+      <div className='lg:hidden'>
+        <Image
+          src="/menu.svg"
+          alt="menu"
+          width={32}
+          height={32}
+          className='inline-block cursor-pointer'
+          onClick={toggleMenu}
+        />
+      </div>
+
+      {/* Responsive menu */}
+      {isMenuOpen && (
+        <ul className="lg:hidden absolute top-20 right-0 bg-white shadow-md p-4">
+          {NAV_LINKS.map((link) => (
+            <li key={link.key} className="mb-3">
+              <div onClick={() => window.location.href = link.href} style={{ cursor: 'pointer' }}>
+                {link.label}
+              </div>
+            </li>
+          ))}
+        </ul>
+      )}
+
+      {/* Regular menu for larger devices */}
+      <ul className="hidden h-full gap-12 lg:flex">
         {NAV_LINKS.map((link) => (
-          <Link href={link.href} key={link.key} className="regular-16 text-gray-50 flexCenter cursor-pointer pb-1.5 transition-all hover:font-bold">
-            {link.label}
-          </Link>
-        ))}
-            </ul>
-            {/* login btn */}
-            <div className='lg:flexCenter hidden'>
-                <Button type="button" title="Login" icon="/user.svg"  variant ="btn_dark_green"
-                />
+          <li key={link.key}>
+            <div onClick={() => window.location.href = link.href} style={{ cursor: 'pointer' }}>
+              {link.label}
             </div>
-            <Image 
-            src="/menu.svg"
-            alt="menu"
-            width={32}
-            height={32}
-            className='inline-blok cursor-pointer lg:hidden'
-            />
+          </li>
+        ))}
+      </ul>
+
+      {/* Login button for larger devices */}
+      <div className='lg:flexCenter hidden'>
+        <Button type="button" title="Login" icon="/user.svg" variant="btn_dark_green" />
+      </div>
     </nav>
+  );
+};
 
-  )
-}
-
-export default Navbar
+export default Navbar;
