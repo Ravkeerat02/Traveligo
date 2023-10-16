@@ -1,10 +1,11 @@
 import Image from 'next/image';
 import React from 'react'
 type ButtonProps = {
-    type: 'Button' | 'Submit' | 'Reset';
+    type: 'button' | 'submit' ;
     title: string
     icon?: string
-    variant: "btn_dark_green"
+    variant: string
+    full?: boolean
 
 }
 
