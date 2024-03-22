@@ -15,7 +15,7 @@
 #### How to Run the Project Locally
    Clone the repository to your local machine.
    ```bash
-   gh repo clone Ravkeerat02/Traveligo
+   git clone https://github.com/Ravkeerat02/Traveligo
    cd singlepageapp
 ```
 
